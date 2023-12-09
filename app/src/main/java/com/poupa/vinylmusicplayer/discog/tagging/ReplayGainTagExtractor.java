@@ -36,8 +36,11 @@ public class ReplayGainTagExtractor {
       } else {
         tags = parseId3Tags(tag, file);
       }
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (Exception ignored) {
+      // Just ignore the failure - dont print not collect the error they might be repeated for many song in the library
+      // One can see that the RG tags are not extracted via the song Details dialog
+      // OopsHandler.collectStackTrace(e);
+      tags = null;
     }
 
     ReplayGainValues result = new ReplayGainValues();
