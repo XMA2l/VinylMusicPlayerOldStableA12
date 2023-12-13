@@ -681,7 +681,12 @@ public class MusicService extends MediaBrowserServiceCompat implements SharedPre
         final Song song = getCurrentSong();
 
         if (song.id == -1) {
-            mediaSession.setMetadata(null);
+            // TODO This is a temporary hack - to avoid passing a null pointer to the OS
+            // See https://github.com/VinylMusicPlayer/VinylMusicPlayer/issues/853#issuecomment-1849096624
+            final MediaMetadataCompat.Builder metaData = new MediaMetadataCompat.Builder();
+            mediaSession.setMetadata(metaData.build());
+
+            //mediaSession.setMetadata(null);
             return;
         }
 
